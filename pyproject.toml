@@ -1,0 +1,24 @@
+[project]
+name = "diagnostics_tk"
+version = "0.1.0"
+description = "A collection of utility functions to streamline the process of setting up a unit testing pattern that's optimized for conducting diagnostic tests on your infrastructure."
+authors = [
+    {name = "Jelle Smet", email = "development@smetj.net"},
+]
+
+dependencies = [
+    "rich"
+]
+
+[project.urls]
+homepage = "https://github.com/smetj/diagnostics-tk"
+repository = "https://github.com/smetj/diagnostics-tk"
+
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel>=0.33.0",
+]
+
+[tool.setuptools.packages]
+find = {}
