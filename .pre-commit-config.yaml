@@ -1,0 +1,13 @@
+repos:
+  - repo: https://github.com/ambv/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+        name: Black
+        args: ["--line-length", "88"]
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: 'v0.0.265'
+    hooks:
+      - id: ruff
+        name: Ruff
+        args: ["--ignore", "E501"]

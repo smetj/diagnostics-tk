@@ -16,6 +16,21 @@ Directly from github:
 ```
 python -m pip install git+https://github.com/smetj/diagnostics-tk.git
 ```
+## Run tests
+
+### Install test dependencies
+```
+python -m pip install .[test]
+```
+
+### Execute tests
+```
+pytest tests/
+```
+
+### Pre-commit
+Support for [pre-commit](https://pre-commit.com/) is included and required to
+use prior to contributing.
 
 ## Example usage
 
