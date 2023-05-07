@@ -30,7 +30,7 @@ import concurrent.futures
 import logging
 import re
 import sys
-from typing import Any, Dict, Type
+from typing import Any, Callable, Dict, Type, Union
 
 from .output import Output
 
@@ -97,13 +97,28 @@ class DiagnosticsRunner:
                 return True
         return False
 
-    def __render_doc_string(self, doc: str, kwargs: Dict[str, Any]) -> str:
+    def __render_doc_string(
+        self, func: Callable, kwargs: Dict[str, Any]
+    ) -> Union[str, None]:
         """
-        Extracts the docstring from the provided `obj` and renders it using
-        the class variables.
+        Extracts the docstring from the provided `func` and renders it using
+        the provided `kwargs`.
         """
-        doc = doc.format(**kwargs)
-        return re.sub(r"\s+", " ", doc)
+
+        if func.__doc__ is None:
+            self.logger.error(
+                f"Failed to render docstring of function `{func.__name__}`. Reason: No docstring"
+            )
+        else:
+            try:
+                doc = func.__doc__.format(**kwargs)
+                return re.sub(r"\s+", " ", doc)
+            except Exception as err:
+                self.logger.error(
+                    f"Failed to render docstring of function `{func.__name__}`. Reason: {err}"
+                )
+
+        return None
 
     def __extract_test_methods(self, obj: Type):
         """
@@ -122,9 +137,7 @@ class DiagnosticsRunner:
         for name in dir(obj):
             func = getattr(obj, name)
             if name.startswith("test_") and callable(func):
-                doc = self.__render_doc_string(
-                    doc=func.__doc__, kwargs=dict(obj.__dict__)
-                )
+                doc = self.__render_doc_string(func=func, kwargs=dict(obj.__dict__))
                 yield f"{self.name}::{class_name}({obj._name})::{name}", func, doc
 
     def __callback(self, future: concurrent.futures.Future):
