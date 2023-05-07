@@ -5,7 +5,7 @@ description = "A collection of utility functions to streamline the process of se
 authors = [
     {name = "Jelle Smet", email = "development@smetj.net"},
 ]
-
+requires-python = ">=3.10"
 dependencies = [
     "rich"
 ]
@@ -22,3 +22,10 @@ requires = [
 
 [tool.setuptools.packages]
 find = {}
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "ruff",
+    "black"
+]

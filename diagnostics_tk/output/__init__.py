@@ -37,4 +37,4 @@ class Output:
         raise Exception("No flush method implemented")
 
 
-from .console_table import ConsoleTable
+from .console_table import ConsoleTable  # noqa: E402, F401
